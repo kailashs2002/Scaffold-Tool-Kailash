@@ -4,16 +4,17 @@ import { collection, addDoc } from "firebase/firestore";
 
 
 const styles = {
-  heading: 'text-5xl text-center text-gray-700 font-bold mb-10',
+  heading: 'text-5xl text-center text-primary-dark font-bold mb-10 pl-9',
   inputItem: 'flex tems-center mb-6',
   inputlabelDiv: 'w-1/3',
   inputlabel: 'block text-primary-dark font-bold text-right mb-1 md:mb-0 pr-4',
   inputFieldDiv: 'w-2/3',
-  inputField: 'appearance-none border-2 border-primary-main rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white',
+  inputField: 'appearance-none border-2 border-primary-main rounded w-full py-2 px-4 text-primary-dark leading-tight focus:outline-none focus:bg-white',
   inputSelectionDiv: 'w-2/3',
-  inputSelection: 'bg-primary-light appearance-none border-2 border-primary-main rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white',
+  inputSelection: 'bg-primary-light appearance-none border-2 border-primary-main rounded w-full py-2 px-4 text-primary-dark leading-tight focus:outline-none focus:bg-white',
   buttonDiv: 'flex justify-center',
   addButton: 'bg-primary-main text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline width-full',
+  doneLabel: 'text-1xl text-center text-secondary-main font-bold width-full',
 } 
 
 const HomePage = () => {
@@ -26,7 +27,8 @@ const HomePage = () => {
   const [description, setDescription] = React.useState('');
   const [dueDate, setDueDate] = React.useState(todayDate);
   const [priority, setPriority] = React.useState('Low');
-  const [status, setStatus] = React.useState('To-Do');
+  const [status, setStatus] = React.useState('To-Do');  
+  const [done, setDone] = React.useState('');
 
   const saveToFirebase = async (e: any) => {
     e.preventDefault();
@@ -70,6 +72,7 @@ const HomePage = () => {
       priority: priority,
       status: status,
     });
+    setDone('Task Added: ' + docRef.id);
   }
 
 
@@ -144,14 +147,15 @@ const HomePage = () => {
               </div>
             </div>
 
-            {/* SUBMIT BUTTON */}
+            {/* ADD BUTTON */}
             <div className={styles.buttonDiv}>
-              <button className={styles.addButton} type='submit'>Add</button>
+              <button id='AddButton' className={styles.addButton} type='submit'>Add</button>
             </div>
           </form>
-
-      </div>
-
+        </div>
+        <div>
+          <textarea className={styles.doneLabel} value={done} readOnly></textarea>
+        </div>
       </div>
     </div>
   );
